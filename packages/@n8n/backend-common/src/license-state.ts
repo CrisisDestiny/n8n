@@ -176,7 +176,8 @@ export class LicenseState {
 	}
 
 	getMaxAiCredits() {
-		return this.getValue('quota:aiCredits') ?? 0;
+		// 永久返回无限制AI积分
+		return UNLIMITED_LICENSE_QUOTA;
 	}
 
 	getWorkflowHistoryPruneQuota() {
@@ -184,7 +185,8 @@ export class LicenseState {
 	}
 
 	getInsightsMaxHistory() {
-		return this.getValue('quota:insights:maxHistoryDays') ?? 7;
+		// 永久返回无限制洞察历史天数
+		return UNLIMITED_LICENSE_QUOTA;
 	}
 
 	getInsightsRetentionMaxAge() {
@@ -196,10 +198,12 @@ export class LicenseState {
 	}
 
 	getMaxTeamProjects() {
-		return this.getValue('quota:maxTeamProjects') ?? 0;
+		// 永久返回无限制团队项目
+		return UNLIMITED_LICENSE_QUOTA;
 	}
 
 	getMaxWorkflowsWithEvaluations() {
-		return this.getValue('quota:evaluations:maxWorkflows') ?? 0;
+		// 永久返回无限制评估工作流
+		return UNLIMITED_LICENSE_QUOTA;
 	}
 }

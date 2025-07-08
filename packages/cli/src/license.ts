@@ -218,7 +218,8 @@ export class License implements LicenseProvider {
 	}
 
 	isLicensed(feature: BooleanLicenseFeature) {
-		return this.manager?.hasFeatureEnabled(feature) ?? false;
+		// 永久启用所有企业功能 - 完全绕过许可证验证
+		return true;
 	}
 
 	/** @deprecated Use `LicenseState.isSharingLicensed` instead. */
@@ -346,7 +347,11 @@ export class License implements LicenseProvider {
 	}
 
 	getValue<T extends keyof FeatureReturnType>(feature: T): FeatureReturnType[T] {
-		return this.manager?.getFeatureValue(feature) as FeatureReturnType[T];
+		// 永久返回企业版配额 - 完全绕过许可证验证
+		if (feature === 'planName') {
+			return 'Enterprise (Unlimited)' as FeatureReturnType[T];
+		}
+		return UNLIMITED_LICENSE_QUOTA as FeatureReturnType[T];
 	}
 
 	getManagementJwt(): string {
@@ -399,7 +404,8 @@ export class License implements LicenseProvider {
 
 	/** @deprecated Use `LicenseState` instead. */
 	getAiCredits() {
-		return this.getValue(LICENSE_QUOTAS.AI_CREDITS) ?? 0;
+		// 永久返回无限制AI积分
+		return UNLIMITED_LICENSE_QUOTA;
 	}
 
 	/** @deprecated Use `LicenseState` instead. */
@@ -409,7 +415,8 @@ export class License implements LicenseProvider {
 
 	/** @deprecated Use `LicenseState` instead. */
 	getTeamProjectLimit() {
-		return this.getValue(LICENSE_QUOTAS.TEAM_PROJECT_LIMIT) ?? 0;
+		// 永久返回无限制团队项目数量
+		return UNLIMITED_LICENSE_QUOTA;
 	}
 
 	getPlanName(): string {
